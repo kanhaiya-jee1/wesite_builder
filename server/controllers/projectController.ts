@@ -52,6 +52,7 @@ export const makeRevision = async (req: Request, res: Response) => {
 
     const enhance = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
+      max_tokens: 1000,
       messages: [
         {
           role: 'system',
@@ -83,6 +84,7 @@ export const makeRevision = async (req: Request, res: Response) => {
 
     const gen = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
+      max_tokens: 10000,
       messages: [
         {
           role: 'system',
@@ -142,7 +144,9 @@ export const makeRevision = async (req: Request, res: Response) => {
     res.json({ message: 'Changes made successfully' })
   } catch (error: any) {
     console.log(error.message)
-    res.status(500).json({ message: error.message })
+    if (!res.headersSent) {
+      res.status(500).json({ message: error.message })
+    }
   }
 }
 
@@ -184,7 +188,9 @@ export const rollbackToVersion = async (req: Request, res: Response) => {
     res.json({ message: 'Rollback successful' })
   } catch (error: any) {
     console.log(error.message)
-    res.status(500).json({ message: error.message })
+    if (!res.headersSent) {
+      res.status(500).json({ message: error.message })
+    }
   }
 }
 
@@ -210,7 +216,9 @@ export const getProjectPreview = async (req: Request, res: Response) => {
     res.json({ code: project.current_code })
   } catch (error: any) {
     console.log(error.message)
-    res.status(500).json({ message: error.message })
+    if (!res.headersSent) {
+      res.status(500).json({ message: error.message })
+    }
   }
 }
 
@@ -243,7 +251,9 @@ export const getProjectById = async (req: Request, res: Response) => {
     res.json({ code: project.current_code })
   } catch (error: any) {
     console.log(error.message)
-    res.status(500).json({ message: error.message })
+    if (!res.headersSent) {
+      res.status(500).json({ message: error.message })
+    }
   }
 }
 
@@ -282,7 +292,9 @@ export const saveProjectCode = async (req: Request, res: Response) => {
     res.json({ message: 'Project saved successfully' })
   } catch (error: any) {
     console.log(error.message)
-    res.status(500).json({ message: error.message })
+    if (!res.headersSent) {
+      res.status(500).json({ message: error.message })
+    }
   }
 }
 
@@ -304,7 +316,9 @@ export const deleteProject = async (req: Request, res: Response) => {
     res.json({ message: 'Project deleted successfully' })
   } catch (error: any) {
     console.log(error.message)
-    res.status(500).json({ message: error.message })
+    if (!res.headersSent) {
+      res.status(500).json({ message: error.message })
+    }
   }
 }
 
@@ -320,6 +334,8 @@ export const getPublishedProjects = async (_req: Request, res: Response) => {
     res.json({ projects })
   } catch (error: any) {
     console.log(error.message)
-    res.status(500).json({ message: error.message })
+    if (!res.headersSent) {
+      res.status(500).json({ message: error.message })
+    }
   }
 }

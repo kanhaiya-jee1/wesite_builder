@@ -26,7 +26,7 @@ export const stripeWebhook = async  (request: Request, response: Response)=>{
           //Handle  the event 
           switch (event.type){
             case 'payment_intent.succeeded':
-                const paymentIntent = event.data.object;
+                const paymentIntent = event.data.object as any;
                 const sessionList = await stripe.checkout.sessions.list({
                   payment_intent: paymentIntent.id
                 })

@@ -50,7 +50,7 @@ const Home = () => {
       </h1>
 
       <p className="text-zinc-400 text-center mt-4 max-w-md">
-        Create, customize and publish website faster than ever with our AI Site Builder.
+        Create, customize and publish website faster than ever with our AI WebsiteBuilder.
       </p>
 
       <form

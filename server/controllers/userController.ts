@@ -85,6 +85,7 @@ export const createUserProject = async (req: Request, res: Response) => {
 
     const promptEnhanceResponse = await openai.chat.completions.create({
       model: "gpt-4o-mini",
+      max_tokens: 1000,
       messages: [
         {
           role: "system",
@@ -97,7 +98,7 @@ export const createUserProject = async (req: Request, res: Response) => {
                         4. Including modern web design best practices
                         5. Mentioning responsive design requirements
                         6. THEMATIC IMAGERY: Identify the niche (e.g., Bakery, Gym, Law Firm) and specify extremely detailed keywords for images.
-                        7. For ANY niche, recommend using: https://loremflickr.com/800/600/<niche_keyword>?random=<unique_number> to ensure the images ALWAYS match the theme.
+                        7. For ANY niche, recommend using: https://loremflickr.com/800/600/<niche_keyword>?random=<unique_number> for a stunning Hero image immediately below the navbar.
                         8. Adding any missing but important elements
                         
                         Return ONLY the enhanced prompt, nothing else. Make it detailed but concise (2-3 paragraphs max).`,
@@ -130,6 +131,7 @@ export const createUserProject = async (req: Request, res: Response) => {
     //  Generate wesite code
     const codeGenerationResponse = await openai.chat.completions.create({
       model: "gpt-4o-mini", 
+      max_tokens: 10000,
      
       messages: [
         {
@@ -147,11 +149,11 @@ export const createUserProject = async (req: Request, res: Response) => {
        - YOU ARE A WORLD-CLASS DESIGNER. The website MUST look like a premium, $10,000 professional site.
        - USE LUXURIOUS DESIGN: Glassmorphism, deep shadows, smooth gradients, and elegant typography (Inter/Roboto).
        - IMAGES ARE MANDATORY: Every section (Hero, Features, Menu, Gallery) MUST have beautiful, large images.
+       - IMPORTANT: The Hero section MUST have a STUNNING background image with a dark overlay and white text, placed immediately below the navbar.
        - IMAGE SOURCE: You MUST use Unsplash-style images. Use this format: https://loremflickr.com/800/600/<specific_keyword>?random=<number>
-       - REPLACE <specific_keyword> with something VERY relevant (e.g., "pizza-close-up" for a restaurant, "modern-office" for tech).
+       - REPLACE <specific_keyword> with something VERY relevant (e.g., "bakery", "fitness", "luxury-car").
        - TAILWIND STYLING: Use rounded-2xl, shadow-2xl, hover:scale-105, and backdrop-blur-md for a high-end feel.
        - NEVER return gray boxes or placeholders. Use real, colorful thematic images.
-       - Ensure the Hero section has a STUNNING background image with a dark overlay and white text.
            
         CRITICAL HARD RULES:
         1. You MUST put ALL output ONLY into message.content.
@@ -222,7 +224,9 @@ export const createUserProject = async (req: Request, res: Response) => {
         data: {credits : {increment: 5}}
     })
     console.log(error);
-    res.status(500).json({ message: error.message });
+    if (!res.headersSent) {
+      res.status(500).json({ message: error.message });
+    }
   }
 };
 
