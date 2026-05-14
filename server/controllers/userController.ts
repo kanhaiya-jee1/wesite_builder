@@ -85,7 +85,7 @@ export const createUserProject = async (req: Request, res: Response) => {
 
     const promptEnhanceResponse = await openai.chat.completions.create({
       model: "gpt-4o-mini",
-      max_tokens: 1000,
+      max_tokens: 500,
       messages: [
         {
           role: "system",
@@ -131,7 +131,7 @@ export const createUserProject = async (req: Request, res: Response) => {
     //  Generate wesite code
     const codeGenerationResponse = await openai.chat.completions.create({
       model: "gpt-4o-mini", 
-      max_tokens: 10000,
+      max_tokens: 8000,
      
       messages: [
         {
