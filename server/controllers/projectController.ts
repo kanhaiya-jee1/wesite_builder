@@ -84,7 +84,7 @@ export const makeRevision = async (req: Request, res: Response) => {
 
     const gen = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
-      max_tokens: 8000,
+      max_tokens: 4000,
       messages: [
         {
           role: 'system',
